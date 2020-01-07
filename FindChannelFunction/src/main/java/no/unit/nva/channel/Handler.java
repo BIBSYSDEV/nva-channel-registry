@@ -42,7 +42,7 @@ public class Handler implements RequestStreamHandler {
             JsonNode event = objectMapper.readTree(input);
             request = objectMapper.readValue(event.get("body").asText(), SearchRequest.class);
         } catch (IOException e) {
-            objectMapper.writeValue(output, new GatewayResponse<>(new ErrorMessage(e.getLocalizedMessage()), headers, SC_BAD_REQUEST));
+            objectMapper.writeValue(output, new GatewayResponse<>(new ErrorMessage(e.getMessage()), headers, SC_BAD_REQUEST));
             return;
         }
 

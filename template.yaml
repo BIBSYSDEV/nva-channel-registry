@@ -5,6 +5,17 @@ Description: >
 
   Sample SAM Template for AWS
 
+Parameters:
+  CognitoAuthorizerArn:
+    Type: String
+    Description: Reference to Cognito UserPool for the stage
+  CustomDomain:
+    Type: String
+    Description: Custom API to connect this lambda to
+  CustomDomainBasePath:
+    Type: String
+    Description: Base path mapping in CustomDomain
+
 Globals:
   Function:
     Timeout: 20

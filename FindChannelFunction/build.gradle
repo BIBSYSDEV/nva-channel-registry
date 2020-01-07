@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.1'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+    testImplementation 'junit:junit:4.12'
+}

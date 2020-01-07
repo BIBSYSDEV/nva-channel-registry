@@ -66,4 +66,4 @@ Outputs:
     Value: !GetAtt FindChannelFunction.Arn
   FindChannelFunctionIamRole:
     Description: "Implicit IAM Role created for Find Channel function"
-    Value: !GetAtt FindChannelFunctionRole.Arns
+    Value: !GetAtt FindChannelFunctionRole.Arn

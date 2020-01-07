@@ -25,6 +25,19 @@ Globals:
       AllowOrigin: "'http://localhost:3000'"
 
 Resources:
+  FindChannelApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Models:
+        Search:
+          type: object
+          required:
+            - searchTerm
+          properties:
+            searchTerm:
+              type: string
+
   FindChannelFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -38,6 +51,11 @@ Resources:
           Properties:
             Path: /search
             Method: POST
+            RestApiId:
+              Ref: FindChannelApi
+            RequestModel:
+              Model: Search
+              Required: true
 
 Outputs:
   FindChannelApi:

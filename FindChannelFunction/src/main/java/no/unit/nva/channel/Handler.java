@@ -9,7 +9,6 @@ import no.unit.nva.channel.model.incoming.SearchRequest;
 import no.unit.nva.channel.model.outgoing.Channel;
 import no.unit.nva.channel.model.outgoing.ErrorMessage;
 import no.unit.nva.channel.model.outgoing.SearchResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.IOException;
@@ -20,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
-import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
-import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.*;
 
 public class Handler implements RequestStreamHandler {
 
@@ -39,15 +37,21 @@ public class Handler implements RequestStreamHandler {
         headers.put(CONTENT_TYPE, "application/json");
         headers.put("Access-Control-Allow-Origin", "http://localhost:3000");
 
-        JsonNode event = objectMapper.readTree(input);
-        SearchRequest request = objectMapper.readValue(event.get("body").asText(), SearchRequest.class);
+        SearchRequest request;
+        try {
+            JsonNode event = objectMapper.readTree(input);
+            request = objectMapper.readValue(event.get("body").asText(), SearchRequest.class);
+        } catch (IOException e) {
+            objectMapper.writeValue(output, new GatewayResponse<>(new ErrorMessage(e.getLocalizedMessage()), headers, SC_BAD_REQUEST));
+            return;
+        }
 
         try {
             List<Channel> channels = channelRegistry.fetchChannels(request.getSearchTerm());
             SearchResponse response = new SearchResponse(channels);
             objectMapper.writeValue(output, new GatewayResponse<>(objectMapper.writeValueAsString(response), headers, SC_OK));
         } catch (ChannelsNotFoundException e) {
-            objectMapper.writeValue(output, new GatewayResponse<>(new ErrorMessage(e.getMessage()), headers, HttpStatus.SC_NOT_FOUND));
+            objectMapper.writeValue(output, new GatewayResponse<>(new ErrorMessage(e.getMessage()), headers, SC_NOT_FOUND));
         } catch (Exception e) {
             e.printStackTrace();
             objectMapper.writeValue(output, new GatewayResponse<>(new ErrorMessage(e.getMessage()), headers, SC_INTERNAL_SERVER_ERROR));

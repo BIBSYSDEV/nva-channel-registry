@@ -60,10 +60,10 @@ Resources:
 Outputs:
   FindChannelApi:
     Description: "API Gateway endpoint URL for Prod stage for Find Channel function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/search/"
+    Value: !Sub "https://${FindChannelApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/search/"
   FindChannelFunction:
     Description: "Find Channel Lambda Function ARN"
     Value: !GetAtt FindChannelFunction.Arn
   FindChannelFunctionIamRole:
     Description: "Implicit IAM Role created for Find Channel function"
-    Value: !GetAtt FindChannelFunctionRole.Arn
+    Value: !GetAtt FindChannelFunctionRole.Arns

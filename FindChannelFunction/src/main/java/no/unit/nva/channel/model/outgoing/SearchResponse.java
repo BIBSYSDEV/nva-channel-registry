@@ -6,6 +6,9 @@ public class SearchResponse {
 
     List<Channel> results;
 
+    public SearchResponse() {
+    }
+
     public SearchResponse(List<Channel> results) {
         this.results = results;
     }

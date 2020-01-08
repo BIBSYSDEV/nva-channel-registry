@@ -1,20 +1,18 @@
 package no.unit.nva.channel.model.incoming;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchRequest {
 
-    private String searchTerm;
+    private final String searchTerm;
 
-    public SearchRequest() {};
-
-    public SearchRequest(String searchTerm) {
+    public SearchRequest(@JsonProperty(value = "searchTerm", required = true) String searchTerm) {
         this.searchTerm = searchTerm;
     }
 
     public String getSearchTerm() {
         return searchTerm;
-    }
-
-    public void setSearchTerm(String searchTerm) {
-        this.searchTerm = searchTerm;
     }
 }

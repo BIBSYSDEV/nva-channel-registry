@@ -1,9 +1,14 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 repositories {
     mavenCentral()
+}
+
+jacoco {
+    toolVersion = "0.8.5"
 }
 
 dependencies {
@@ -12,4 +17,5 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.1'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
     testImplementation 'junit:junit:4.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
 }

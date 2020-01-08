@@ -10,6 +10,9 @@ public class Filter {
     @JsonProperty("selection")
     private Selection selection;
 
+    public Filter() {
+    }
+
     public Filter(String variabel, Selection selection) {
         this.variabel = variabel;
         this.selection = selection;

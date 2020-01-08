@@ -12,6 +12,9 @@ public class Selection {
     @JsonProperty("values")
     private List<String> values;
 
+    public Selection() {
+    }
+
     public Selection(String filter, List<String> values) {
         this.filter = filter;
         this.values = values;

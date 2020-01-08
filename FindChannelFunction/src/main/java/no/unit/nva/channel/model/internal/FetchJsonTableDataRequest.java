@@ -35,6 +35,9 @@ public class FetchJsonTableDataRequest {
     @JsonProperty("filter")
     private List<Filter> filter;
 
+    public FetchJsonTableDataRequest() {
+    }
+
     public FetchJsonTableDataRequest(Integer tableId, Integer apiVersion, String statusLine, Integer limit, String codeText, String decimalSeparator, List<String> variables, List<String> sortBy, List<Filter> filter) {
         this.tableId = tableId;
         this.apiVersion = apiVersion;
@@ -120,7 +123,6 @@ public class FetchJsonTableDataRequest {
     }
 
     public static FetchJsonTableDataRequest searchTerm(String searchTerm) {
-        System.out.println(searchTerm);
         Selection selection = new Selection("like", Collections.singletonList(searchTerm));
         Filter filter = new Filter("Original Tittel", selection);
         return new FetchJsonTableDataRequest(

@@ -1,10 +1,7 @@
-package no.unit.nva.channel.model;
+package no.unit.nva.channel.model.internal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.channel.model.internal.FetchJsonTableDataRequest;
-import no.unit.nva.channel.model.internal.Filter;
-import no.unit.nva.channel.model.internal.Selection;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -12,7 +9,7 @@ import java.util.Collections;
 public class FetchJsonTableDataRequestTest {
 
     @Test
-    public void test() throws JsonProcessingException {
+    public void testObjectMapping() throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -30,10 +27,7 @@ public class FetchJsonTableDataRequestTest {
                 Collections.singletonList(filter)
         );
 
-        String json = objectMapper.writeValueAsString(request);
-
-        System.out.println(json);
-
+        objectMapper.readValue(objectMapper.writeValueAsString(request), FetchJsonTableDataRequest.class);
     }
 
 }

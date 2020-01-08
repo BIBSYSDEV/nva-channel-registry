@@ -9,7 +9,7 @@ import java.util.Collections;
 public class SearchResponseTest {
 
     @Test
-    public void test() throws JsonProcessingException {
+    public void testObjectMapping() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Channel channel = new Channel(
@@ -22,9 +22,7 @@ public class SearchResponseTest {
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
 
-        String json = objectMapper.writeValueAsString(response);
-
-        System.out.println(json);
+        objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
     }
 
     @Test
@@ -41,9 +39,7 @@ public class SearchResponseTest {
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
 
-        String json = objectMapper.writeValueAsString(response);
-
-        System.out.println(json);
+        objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
     }
 
 }

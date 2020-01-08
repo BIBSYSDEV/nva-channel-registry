@@ -57,13 +57,10 @@ Resources:
               Model: Search
               Required: true
 
-Outputs:
-  FindChannelApi:
-    Description: "API Gateway endpoint URL for Prod stage for Find Channel function"
-    Value: !Sub "https://${FindChannelApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/search/"
-  FindChannelFunction:
-    Description: "Find Channel Lambda Function ARN"
-    Value: !GetAtt FindChannelFunction.Arn
-  FindChannelFunctionIamRole:
-    Description: "Implicit IAM Role created for Find Channel function"
-    Value: !GetAtt FindChannelFunctionRole.Arn
+  FindChannelBasePathMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      BasePath: !Ref CustomDomainBasePath
+      DomainName: !Ref CustomDomain
+      RestApiId: !Ref FindChannelApi
+      Stage: !Ref FindChannelApi.Stage

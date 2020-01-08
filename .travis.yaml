@@ -1,6 +1,10 @@
+language: java
 jdk:
   - openjdk8
   - openjdk11
+dist: xenial
+os:
+  - linux
 script:
   - cd FindChannelFunction
   - gradlew build

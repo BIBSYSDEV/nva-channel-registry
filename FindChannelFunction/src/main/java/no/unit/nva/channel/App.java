@@ -56,7 +56,7 @@ public class App implements RequestStreamHandler {
         }
 
         try {
-            List<Channel> channels = channelRegistryClient.fetchChannels(searchRequest.getSearchTerm());
+            List<Channel> channels = channelRegistryClient.fetchChannels(searchRequest.getTableId(), searchRequest.getSearchTerm());
             SearchResponse searchResponse = new SearchResponse(channels);
             writeGatewayResponse(output, searchResponse, headers, SC_OK);
         } catch (NoResultsFoundException e) {

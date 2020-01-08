@@ -9,7 +9,7 @@ public class SearchRequestTest {
     @Test
     public void testObjectMapping() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        SearchRequest searchRequest = new SearchRequest("Search!");
+        SearchRequest searchRequest = new SearchRequest(851, "Search!");
 
         objectMapper.readValue(objectMapper.writeValueAsString(searchRequest), SearchRequest.class);
     }

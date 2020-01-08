@@ -16,6 +16,7 @@ import java.util.Map;
 
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -43,7 +44,7 @@ public class AppTest {
     @Test
     public void testNoResultsFoundException() throws IOException, NoResultsFoundException {
         ChannelRegistryClient channelRegistryClient = mock(ChannelRegistryClient.class);
-        when(channelRegistryClient.fetchChannels(anyString())).thenThrow(NoResultsFoundException.class);
+        when(channelRegistryClient.fetchChannels(anyInt(), anyString())).thenThrow(NoResultsFoundException.class);
         App app = new App(objectMapper, channelRegistryClient);
         Context context = mock(Context.class);
         OutputStream output = new ByteArrayOutputStream();
@@ -57,7 +58,7 @@ public class AppTest {
     @Test
     public void testIOException() throws IOException, NoResultsFoundException {
         ChannelRegistryClient channelRegistryClient = mock(ChannelRegistryClient.class);
-        when(channelRegistryClient.fetchChannels(anyString())).thenThrow(IOException.class);
+        when(channelRegistryClient.fetchChannels(anyInt(), anyString())).thenThrow(IOException.class);
         App app = new App(objectMapper, channelRegistryClient);
 
         Context context = mock(Context.class);
@@ -84,7 +85,7 @@ public class AppTest {
 
     private InputStream inputStream() throws JsonProcessingException {
         Map<String, Object> event = new HashMap<>();
-        event.put("body", objectMapper.writeValueAsString(new SearchRequest("%test%")));
+        event.put("body", objectMapper.writeValueAsString(new SearchRequest(851, "%test%")));
         return new ByteArrayInputStream(objectMapper.writeValueAsBytes(event));
     }
 }

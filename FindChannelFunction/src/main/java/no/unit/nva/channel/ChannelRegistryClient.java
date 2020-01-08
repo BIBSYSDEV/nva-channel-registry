@@ -32,8 +32,8 @@ public class ChannelRegistryClient {
         this.url = url;
     }
 
-    public List<Channel> fetchChannels(String searchTerm) throws IOException, NoResultsFoundException {
-        FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.searchTerm(searchTerm);
+    public List<Channel> fetchChannels(Integer id, String searchTerm) throws IOException, NoResultsFoundException {
+        FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.create(id, searchTerm);
         List<Channel> results = new ArrayList<>();
         HttpPost request = new HttpPost(url);
         request.setHeader(ACCEPT, APPLICATION_JSON.getMimeType());
@@ -64,14 +64,24 @@ public class ChannelRegistryClient {
         }
     }
 
-    protected Channel toChannel(JsonNode jsonNode) {
-        return new Channel(
-                jsonNode.get("Original tittel").textValue(),
-                jsonNode.get("Online ISSN").textValue(),
-                jsonNode.get("Print ISSN").textValue(),
-                null,
-                jsonNode.get("Forlag").textValue()
-        );
+    protected Channel toChannel(JsonNode json) {
+        Channel channel = new Channel();
+        if (json.has("Original tittel")) {
+            channel.setOriginalTitle(json.get("Original tittel").textValue());
+        }
+        if (json.has("Online ISSN")) {
+            channel.setOnlineIssn(json.get("Online ISSN").textValue());
+        }
+        if (json.has("Print ISSN")) {
+            channel.setOnlineIssn(json.get("Print ISSN").textValue());
+        }
+        if (json.has("Online ISSN")) {
+            channel.setOnlineIssn(json.get("Online ISSN").textValue());
+        }
+        if (json.has("Forlag")) {
+            channel.setOnlineIssn(json.get("Forlag").textValue());
+        }
+        return channel;
     }
 
 }

@@ -122,11 +122,11 @@ public class FetchJsonTableDataRequest {
         this.filter = filter;
     }
 
-    public static FetchJsonTableDataRequest searchTerm(String searchTerm) {
+    public static FetchJsonTableDataRequest create(Integer id, String searchTerm) {
         Selection selection = new Selection("like", Collections.singletonList(searchTerm));
         Filter filter = new Filter("Original Tittel", selection);
         return new FetchJsonTableDataRequest(
-                851,
+                id,
                 1,
                 "N",
                 10,

@@ -31,7 +31,7 @@ public class ChannelRegistryClientTest {
         when(httpClient.execute(any())).thenReturn(response);
 
         ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient, "http://example.org");
-        channelRegistryClient.fetchChannels("keyword");
+        channelRegistryClient.fetchChannels(851, "searchTerm");
     }
 
     @Test(expected = NoResultsFoundException.class)
@@ -43,7 +43,7 @@ public class ChannelRegistryClientTest {
         when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("status_message_response.json").toURI())))));
 
         ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient, "http://example.org");
-        channelRegistryClient.fetchChannels("keyword");
+        channelRegistryClient.fetchChannels(851, "searchTerm");
     }
 
     @Test
@@ -55,7 +55,8 @@ public class ChannelRegistryClientTest {
         when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("valid_response.json").toURI())))));
 
         ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient, "http://example.org");
-        List<Channel> channels = channelRegistryClient.fetchChannels("keyword");
+        List<Channel> channels =         channelRegistryClient.fetchChannels(851, "searchTerm");
+
 
         Assert.assertEquals(10, channels.size());
     }

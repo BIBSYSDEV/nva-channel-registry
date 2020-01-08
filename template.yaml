@@ -33,8 +33,11 @@ Resources:
         Search:
           type: object
           required:
+            - tableId
             - searchTerm
           properties:
+            tableId:
+              type: integer
             searchTerm:
               type: string
 

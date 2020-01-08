@@ -6,10 +6,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchRequest {
 
+    private final Integer tableId;
     private final String searchTerm;
 
-    public SearchRequest(@JsonProperty(value = "searchTerm", required = true) String searchTerm) {
+    public SearchRequest(
+            @JsonProperty(value = "tableId", required = true) Integer tableId,
+            @JsonProperty(value = "searchTerm", required = true) String searchTerm
+    ) {
+        this.tableId = tableId;
         this.searchTerm = searchTerm;
+    }
+
+    public Integer getTableId() {
+        return tableId;
     }
 
     public String getSearchTerm() {

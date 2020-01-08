@@ -78,6 +78,9 @@ public class ChannelRegistryClient {
         if (json.has("Online ISSN")) {
             channel.setOnlineIssn(json.get("Online ISSN").textValue());
         }
+        if (json.get("Nivå 2019").isNumber()) {
+            channel.setLevel(Integer.parseInt(json.get("Nivå 2019").textValue()));
+        }
         if (json.has("Forlag")) {
             channel.setOnlineIssn(json.get("Forlag").textValue());
         }

@@ -9,6 +9,7 @@ import no.unit.nva.channel.model.incoming.SearchRequest;
 import no.unit.nva.channel.model.outgoing.Channel;
 import no.unit.nva.channel.model.outgoing.ErrorMessage;
 import no.unit.nva.channel.model.outgoing.SearchResponse;
+import org.apache.http.HttpHeaders;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class App implements RequestStreamHandler {
     public void handleRequest(InputStream input, OutputStream output, Context context) throws IOException {
         Map<String,String> headers = new HashMap<>();
         headers.put(CONTENT_TYPE, APPLICATION_JSON.getMimeType());
-        //headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, CORS_ORIGIN);
+        headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, CORS_ORIGIN);
 
         SearchRequest searchRequest;
         try {

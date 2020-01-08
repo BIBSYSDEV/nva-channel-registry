@@ -14,6 +14,8 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static no.unit.nva.channel.App.ACCESS_CONTROL_ALLOW_ORIGIN;
+import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -35,7 +37,8 @@ public class AppTest {
 
         GatewayResponse gatewayResponse = objectMapper.readValue(output.toString(), GatewayResponse.class);
         assertEquals(SC_OK, gatewayResponse.getStatusCode());
-        Assert.assertTrue(gatewayResponse.getHeaders().keySet().contains(HttpHeaders.CONTENT_TYPE));
+        Assert.assertTrue(gatewayResponse.getHeaders().keySet().contains(CONTENT_TYPE));
+        Assert.assertTrue(gatewayResponse.getHeaders().keySet().contains(ACCESS_CONTROL_ALLOW_ORIGIN));
         SearchResponse searchResponse = objectMapper.readValue(gatewayResponse.getBody().toString(), SearchResponse.class);
         assertEquals(10, searchResponse.getResults().size());
     }

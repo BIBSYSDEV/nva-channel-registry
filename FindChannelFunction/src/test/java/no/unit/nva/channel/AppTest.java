@@ -36,7 +36,6 @@ public class AppTest {
         GatewayResponse gatewayResponse = objectMapper.readValue(output.toString(), GatewayResponse.class);
         assertEquals(SC_OK, gatewayResponse.getStatusCode());
         Assert.assertTrue(gatewayResponse.getHeaders().keySet().contains(HttpHeaders.CONTENT_TYPE));
-        Assert.assertTrue(gatewayResponse.getHeaders().keySet().contains("Access-Control-Allow-Origin"));
         SearchResponse searchResponse = objectMapper.readValue(gatewayResponse.getBody().toString(), SearchResponse.class);
         assertEquals(10, searchResponse.getResults().size());
     }

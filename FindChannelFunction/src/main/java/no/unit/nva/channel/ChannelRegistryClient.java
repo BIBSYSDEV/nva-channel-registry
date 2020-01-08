@@ -18,6 +18,7 @@ import java.util.List;
 
 import static org.apache.http.HttpHeaders.ACCEPT;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
+import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 public class ChannelRegistryClient {
 
@@ -35,8 +36,8 @@ public class ChannelRegistryClient {
         FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.searchTerm(searchTerm);
         List<Channel> results = new ArrayList<>();
         HttpPost request = new HttpPost(url);
-        request.setHeader(ACCEPT, "application/json");
-        request.setHeader(CONTENT_TYPE, "application/json");
+        request.setHeader(ACCEPT, APPLICATION_JSON.getMimeType());
+        request.setHeader(CONTENT_TYPE, APPLICATION_JSON.getMimeType());
         request.setEntity(new StringEntity(objectMapper.writeValueAsString(fetchJsonTableDataRequest)));
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {

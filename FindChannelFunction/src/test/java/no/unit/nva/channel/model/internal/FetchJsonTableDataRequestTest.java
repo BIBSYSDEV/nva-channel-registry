@@ -15,7 +15,7 @@ public class FetchJsonTableDataRequestTest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Selection selection = new Selection("like", Collections.singletonList("%test%"));
-        Filter filter = new Filter("Original Tittel", selection);
+        Filter filter = new Filter("Original tittel", selection);
         FetchJsonTableDataRequest request = new FetchJsonTableDataRequest(
                 851,
                 1,

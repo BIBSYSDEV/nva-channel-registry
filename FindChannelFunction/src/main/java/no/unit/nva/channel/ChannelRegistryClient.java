@@ -78,8 +78,12 @@ public class ChannelRegistryClient {
         if (json.has("Online ISSN")) {
             channel.setOnlineIssn(json.get("Online ISSN").textValue());
         }
-        if (json.get("Nivå 2019").isNumber()) {
-            channel.setLevel(Integer.parseInt(json.get("Nivå 2019").textValue()));
+        if (json.has("Nivå 2019")) {
+            try {
+                channel.setLevel(Integer.parseInt(json.get("Nivå 2019").textValue()));
+            } catch (NumberFormatException e) {
+                System.out.println("Error parsing level " + e.getMessage());
+            }
         }
         if (json.has("Forlag")) {
             channel.setOnlineIssn(json.get("Forlag").textValue());

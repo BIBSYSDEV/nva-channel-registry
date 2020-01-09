@@ -55,8 +55,7 @@ public class ChannelRegistryClientTest {
         when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("valid_response.json").toURI())))));
 
         ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient, "http://example.org");
-        List<Channel> channels =         channelRegistryClient.fetchChannels(851, "searchTerm");
-
+        List<Channel> channels = channelRegistryClient.fetchChannels(851, "searchTerm");
 
         Assert.assertEquals(10, channels.size());
     }

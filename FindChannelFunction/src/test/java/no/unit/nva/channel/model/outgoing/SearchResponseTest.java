@@ -2,7 +2,7 @@ package no.unit.nva.channel.model.outgoing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.channel.App;
+import no.unit.nva.channel.FindChannelFunctionApp;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class SearchResponseTest {
 
     @Test
     public void testObjectMapping() throws JsonProcessingException {
-        ObjectMapper objectMapper = App.createObjectMapper();
+        ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
 
         Channel channel = new Channel(
                 "Original Tittel",
@@ -25,13 +25,14 @@ public class SearchResponseTest {
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
 
-        SearchResponse mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
+        SearchResponse mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(response),
+                SearchResponse.class);
         assertNotNull(mappedObject);
     }
 
     @Test
     public void testResponseHasNullAsLevel() throws JsonProcessingException {
-        ObjectMapper objectMapper = App.createObjectMapper();
+        ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
 
         Channel channel = new Channel(
                 "Original Tittel",
@@ -43,7 +44,8 @@ public class SearchResponseTest {
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
 
-        SearchResponse mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
+        SearchResponse mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(response),
+                SearchResponse.class);
         assertNotNull(mappedObject);
     }
 

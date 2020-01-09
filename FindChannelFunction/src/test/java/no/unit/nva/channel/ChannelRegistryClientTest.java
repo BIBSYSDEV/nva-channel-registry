@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 public class ChannelRegistryClientTest {
 
-    private ObjectMapper objectMapper = App.createObjectMapper();
+    private ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
 
     @Test(expected = NoResultsFoundException.class)
     public void testEmptyResponse() throws IOException, NoResultsFoundException {
@@ -30,7 +30,8 @@ public class ChannelRegistryClientTest {
 
         when(httpClient.execute(any())).thenReturn(response);
 
-        ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient, "http://example.org");
+        ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient,
+                "http://example.org");
         channelRegistryClient.fetchChannels(851, "searchTerm");
     }
 
@@ -40,9 +41,11 @@ public class ChannelRegistryClientTest {
         CloseableHttpResponse response = mock(CloseableHttpResponse.class);
 
         when(httpClient.execute(any())).thenReturn(response);
-        when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("status_message_response.json").toURI())))));
+        when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass()
+                .getClassLoader().getResource("status_message_response.json").toURI())))));
 
-        ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient, "http://example.org");
+        ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient,
+                "http://example.org");
         channelRegistryClient.fetchChannels(851, "searchTerm");
     }
 
@@ -52,9 +55,11 @@ public class ChannelRegistryClientTest {
         CloseableHttpResponse response = mock(CloseableHttpResponse.class);
 
         when(httpClient.execute(any())).thenReturn(response);
-        when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("valid_response.json").toURI())))));
+        when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass()
+                .getClassLoader().getResource("valid_response.json").toURI())))));
 
-        ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient, "http://example.org");
+        ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient,
+                "http://example.org");
         List<Channel> channels = channelRegistryClient.fetchChannels(851, "searchTerm");
 
         Assert.assertEquals(10, channels.size());

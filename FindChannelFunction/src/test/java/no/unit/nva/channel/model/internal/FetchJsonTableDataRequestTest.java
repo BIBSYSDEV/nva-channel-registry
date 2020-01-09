@@ -2,7 +2,7 @@ package no.unit.nva.channel.model.internal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.channel.App;
+import no.unit.nva.channel.FindChannelFunctionApp;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class FetchJsonTableDataRequestTest {
     @Test
     public void testObjectMapping() throws JsonProcessingException {
 
-        ObjectMapper objectMapper = App.createObjectMapper();
+        ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
 
         Selection selection = new Selection("like", Collections.singletonList("%test%"));
         Filter filter = new Filter("Original tittel", selection);
@@ -29,7 +29,8 @@ public class FetchJsonTableDataRequestTest {
                 Collections.singletonList(filter)
         );
 
-        FetchJsonTableDataRequest mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(request), FetchJsonTableDataRequest.class);
+        FetchJsonTableDataRequest mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(request),
+                FetchJsonTableDataRequest.class);
         Assert.assertNotNull(mappedObject);
     }
 

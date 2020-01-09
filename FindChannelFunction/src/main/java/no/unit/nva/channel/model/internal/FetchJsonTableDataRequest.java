@@ -38,7 +38,9 @@ public class FetchJsonTableDataRequest {
     public FetchJsonTableDataRequest() {
     }
 
-    public FetchJsonTableDataRequest(Integer tableId, Integer apiVersion, String statusLine, Integer limit, String codeText, String decimalSeparator, List<String> variables, List<String> sortBy, List<Filter> filter) {
+    public FetchJsonTableDataRequest(Integer tableId, Integer apiVersion, String statusLine, Integer limit,
+                                     String codeText, String decimalSeparator, List<String> variables,
+                                     List<String> sortBy, List<Filter> filter) {
         this.tableId = tableId;
         this.apiVersion = apiVersion;
         this.statusLine = statusLine;

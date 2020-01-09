@@ -22,9 +22,9 @@ import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 public class ChannelRegistryClient {
 
-    private final ObjectMapper objectMapper;
-    private final CloseableHttpClient httpClient;
-    private final String url;
+    private final transient ObjectMapper objectMapper;
+    private final transient CloseableHttpClient httpClient;
+    private final transient String url;
 
     public ChannelRegistryClient(ObjectMapper objectMapper, CloseableHttpClient httpClient, String url) {
         this.objectMapper = objectMapper;
@@ -32,8 +32,8 @@ public class ChannelRegistryClient {
         this.url = url;
     }
 
-    public List<Channel> fetchChannels(Integer id, String searchTerm) throws IOException, NoResultsFoundException {
-        FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.create(id, searchTerm);
+    public List<Channel> fetchChannels(Integer tableId, String searchTerm) throws IOException, NoResultsFoundException {
+        FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.create(tableId, searchTerm);
         List<Channel> results = new ArrayList<>();
         HttpPost request = new HttpPost(url);
         request.setHeader(ACCEPT, APPLICATION_JSON.getMimeType());
@@ -41,13 +41,12 @@ public class ChannelRegistryClient {
         request.setEntity(new StringEntity(objectMapper.writeValueAsString(fetchJsonTableDataRequest)));
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
-            JsonNode json;
             HttpEntity entity = response.getEntity();
             if (entity == null) {
                 throw new NoResultsFoundException("Response from registry is empty.");
             }
             String entityString = EntityUtils.toString(entity);
-            json = objectMapper.readTree(entityString);
+            JsonNode json = objectMapper.readTree(entityString);
             validateJsonResponse(json);
             json.forEach(result -> {
                 results.add(toChannel(result));
@@ -57,9 +56,9 @@ public class ChannelRegistryClient {
     }
 
     private void validateJsonResponse(JsonNode jsonResponse) throws NoResultsFoundException {
-        if (jsonResponse.has(1) &&
-                jsonResponse.get(1).at("/returnerte poster").isNumber() &&
-                jsonResponse.get(1).at("/returnerte poster").intValue() == 0) {
+        if (jsonResponse.has(1)
+                && jsonResponse.get(1).at("/returnerte poster").isNumber()
+                && jsonResponse.get(1).at("/returnerte poster").intValue() == 0) {
             throw new NoResultsFoundException("No results found for this search term.");
         }
     }
@@ -74,9 +73,6 @@ public class ChannelRegistryClient {
         }
         if (json.has("Print ISSN")) {
             channel.setOnlineIssn(json.get("Print ISSN").textValue());
-        }
-        if (json.has("Online ISSN")) {
-            channel.setOnlineIssn(json.get("Online ISSN").textValue());
         }
         if (json.has("Nivå 2019")) {
             try {

@@ -46,7 +46,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: FindChannelFunction
-      Handler: no.unit.nva.channel.App::handleRequest
+      Handler: no.unit.nva.channel.FindChannelFunctionApp::handleRequest
       Runtime: java8
       MemorySize: 512
       Events:

@@ -1,10 +1,19 @@
 package no.unit.nva.channel.model.outgoing;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Channel {
 
+    @JsonProperty("title")
     private String originalTitle;
+
+    @JsonProperty("onlineIssn")
     private String onlineIssn;
+
+    @JsonProperty("prrinIssn")
     private String printIssn;
+
+    @JsonProperty("level")
     private Integer level;
 
     public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level) {

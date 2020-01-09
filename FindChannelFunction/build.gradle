@@ -1,9 +1,16 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 repositories {
     jcenter()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
 }
 
 dependencies {

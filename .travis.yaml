@@ -15,5 +15,6 @@ before_install:
 script:
   - cd FindChannelFunction
   - ./gradlew build
+  - ./gradlew jacocoTestReport
 after_success:
   - java -jar codacy-coverage-reporter-assembly.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml

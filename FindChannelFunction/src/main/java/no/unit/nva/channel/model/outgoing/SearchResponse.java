@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SearchResponse {
 
-    List<Channel> results;
+    private List<Channel> results;
 
     public SearchResponse() {
     }

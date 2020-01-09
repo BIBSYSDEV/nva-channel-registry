@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.channel.exception.NoResultsFoundException;
 import no.unit.nva.channel.model.incoming.SearchRequest;
 import no.unit.nva.channel.model.outgoing.SearchResponse;
-import org.apache.http.HttpHeaders;
 import org.junit.Assert;
 import org.junit.Test;
 

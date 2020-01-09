@@ -2,6 +2,7 @@ package no.unit.nva.channel.model.internal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -27,7 +28,8 @@ public class FetchJsonTableDataRequestTest {
                 Collections.singletonList(filter)
         );
 
-        objectMapper.readValue(objectMapper.writeValueAsString(request), FetchJsonTableDataRequest.class);
+        FetchJsonTableDataRequest mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(request), FetchJsonTableDataRequest.class);
+        Assert.assertNotNull(mappedObject);
     }
 
 }

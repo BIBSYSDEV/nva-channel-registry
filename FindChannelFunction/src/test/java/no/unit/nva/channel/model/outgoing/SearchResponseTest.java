@@ -2,9 +2,12 @@ package no.unit.nva.channel.model.outgoing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Collections;
+
+import static org.junit.Assert.assertNotNull;
 
 public class SearchResponseTest {
 
@@ -22,7 +25,8 @@ public class SearchResponseTest {
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
 
-        objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
+        SearchResponse mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
+        assertNotNull(mappedObject);
     }
 
     @Test
@@ -39,7 +43,8 @@ public class SearchResponseTest {
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
 
-        objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
+        SearchResponse mappedObject = objectMapper.readValue(objectMapper.writeValueAsString(response), SearchResponse.class);
+        assertNotNull(mappedObject);
     }
 
 }

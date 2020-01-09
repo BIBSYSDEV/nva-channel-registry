@@ -6,14 +6,12 @@ public class Channel {
     private String onlineIssn;
     private String printIssn;
     private Integer level;
-    private String publishing;
 
-    public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level, String publishing) {
+    public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level) {
         this.originalTitle = originalTitle;
         this.onlineIssn = onlineIssn;
         this.printIssn = printIssn;
         this.level = level;
-        this.publishing = publishing;
     }
 
     public Channel() {
@@ -52,11 +50,4 @@ public class Channel {
         this.level = level;
     }
 
-    public String getPublishing() {
-        return publishing;
-    }
-
-    public void setPublishing(String publishing) {
-        this.publishing = publishing;
-    }
 }

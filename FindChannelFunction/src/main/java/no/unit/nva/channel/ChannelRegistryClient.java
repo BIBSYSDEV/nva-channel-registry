@@ -81,9 +81,6 @@ public class ChannelRegistryClient {
                 System.out.println("Error parsing level " + e.getMessage());
             }
         }
-        if (json.has("Forlag")) {
-            channel.setOnlineIssn(json.get("Forlag").textValue());
-        }
         return channel;
     }
 

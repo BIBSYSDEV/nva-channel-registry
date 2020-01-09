@@ -19,8 +19,7 @@ public class SearchResponseTest {
                 "Original Tittel",
                 "Online ISSN",
                 "Print ISSN",
-                1,
-                "Forlag"
+                1
         );
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
@@ -38,8 +37,7 @@ public class SearchResponseTest {
                 "Original Tittel",
                 "Online ISSN",
                 "Print ISSN",
-                null,
-                "Forlag"
+                null
         );
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));

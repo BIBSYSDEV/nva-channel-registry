@@ -2,6 +2,7 @@ package no.unit.nva.channel.model.internal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.channel.App;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class FetchJsonTableDataRequestTest {
     @Test
     public void testObjectMapping() throws JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = App.createObjectMapper();
 
         Selection selection = new Selection("like", Collections.singletonList("%test%"));
         Filter filter = new Filter("Original tittel", selection);

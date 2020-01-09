@@ -18,6 +18,8 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.1'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+    compile group: 'org.zalando', name: 'problem', version: '0.23.0'
+    compile group: 'org.zalando', name: 'jackson-datatype-problem', version: '0.23.0'
     testImplementation 'junit:junit:4.12'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
 }

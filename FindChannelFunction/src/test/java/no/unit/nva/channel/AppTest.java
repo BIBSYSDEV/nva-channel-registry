@@ -8,8 +8,11 @@ import no.unit.nva.channel.model.incoming.SearchRequest;
 import no.unit.nva.channel.model.outgoing.SearchResponse;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +20,7 @@ import static no.unit.nva.channel.App.ACCESS_CONTROL_ALLOW_ORIGIN;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -24,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 public class AppTest {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = App.createObjectMapper();
 
     @Test
     public void test() throws IOException {
@@ -82,6 +86,14 @@ public class AppTest {
 
         GatewayResponse gatewayResponse = objectMapper.readValue(output.toString(), GatewayResponse.class);
         assertEquals(SC_BAD_REQUEST, gatewayResponse.getStatusCode());
+    }
+
+    @Test
+    public void testBadUri() {
+        Context context = mock(Context.class);
+        when(context.getAwsRequestId()).thenReturn("::/&(%¤#");
+        URI instance = App.instance(context);
+        assertNull(instance);
     }
 
     private InputStream inputStream() throws JsonProcessingException {

@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 public class ChannelRegistryClientTest {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = App.createObjectMapper();
 
     @Test(expected = NoResultsFoundException.class)
     public void testEmptyResponse() throws IOException, NoResultsFoundException {

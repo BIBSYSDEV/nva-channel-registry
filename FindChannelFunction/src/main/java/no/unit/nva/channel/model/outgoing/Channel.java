@@ -10,7 +10,7 @@ public class Channel {
     @JsonProperty("onlineIssn")
     private String onlineIssn;
 
-    @JsonProperty("prrinIssn")
+    @JsonProperty("printIssn")
     private String printIssn;
 
     @JsonProperty("level")

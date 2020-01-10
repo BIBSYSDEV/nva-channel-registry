@@ -49,6 +49,9 @@ Resources:
       Handler: no.unit.nva.channel.FindChannelFunctionApp::handleRequest
       Runtime: java8
       MemorySize: 512
+      Environment:
+        Variables:
+          ALLOWED_ORIGIN: '*'
       Events:
         FindChannel:
           Type: Api

@@ -42,16 +42,17 @@ public class FindChannelFunctionApp implements RequestStreamHandler {
     public static final String CHANNEL_REGISTRY_URI = "https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
     public static final String PROBLEM_JSON = "application/problem+json";
-    public static final String CORS_ORIGIN = "*";
+    public transient String allowedOrigin;
 
     public FindChannelFunctionApp() {
         this(createObjectMapper(), new ChannelRegistryClient(createObjectMapper(), HttpClients.createDefault(),
-                CHANNEL_REGISTRY_URI));
+                CHANNEL_REGISTRY_URI), new Environment());
     }
 
-    public FindChannelFunctionApp(ObjectMapper objectMapper, ChannelRegistryClient channelRegistryClient) {
+    public FindChannelFunctionApp(ObjectMapper objectMapper, ChannelRegistryClient channelRegistryClient, Environment environment) {
         this.objectMapper = objectMapper;
         this.channelRegistryClient = channelRegistryClient;
+        this.allowedOrigin = environment.get("ALLOWED_ORIGIN").orElseThrow(IllegalStateException::new);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class FindChannelFunctionApp implements RequestStreamHandler {
     private void writeResponse(OutputStream output, Object body, int statusCode) throws IOException {
         Map<String,String> headers = new ConcurrentHashMap<>();
         headers.put(CONTENT_TYPE, APPLICATION_JSON.getMimeType());
-        headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, CORS_ORIGIN);
+        headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, allowedOrigin);
         headers.put(HttpHeaders.VARY, "Origin");
 
         objectMapper.writeValue(output, new GatewayResponse<>(objectMapper.writeValueAsString(body), headers,
@@ -94,7 +95,7 @@ public class FindChannelFunctionApp implements RequestStreamHandler {
     private void writeErrorResponse(OutputStream output, Object body, int statusCode) throws IOException {
         Map<String,String> headers = new ConcurrentHashMap<>();
         headers.put(CONTENT_TYPE, PROBLEM_JSON);
-        headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, CORS_ORIGIN);
+        headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, allowedOrigin);
         headers.put(HttpHeaders.VARY, "Origin");
 
         objectMapper.writeValue(output, new GatewayResponse<>(objectMapper.writeValueAsString(body), headers,

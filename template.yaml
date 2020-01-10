@@ -23,7 +23,7 @@ Globals:
     Cors:
       AllowMethods: "'POST,OPTIONS'"
       AllowHeaders: "'Content-Type'"
-      AllowOrigin: "'http://localhost:3000'"
+      AllowOrigin: "'*'"
 
 Resources:
   FindChannelApi:

@@ -8,6 +8,7 @@ import no.unit.nva.channel.exception.NoResultsFoundException;
 import no.unit.nva.channel.model.incoming.SearchRequest;
 import no.unit.nva.channel.model.outgoing.Channel;
 import no.unit.nva.channel.model.outgoing.SearchResponse;
+import org.apache.http.HttpHeaders;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.zalando.problem.Problem;
@@ -41,7 +42,7 @@ public class FindChannelFunctionApp implements RequestStreamHandler {
     public static final String CHANNEL_REGISTRY_URI = "https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
     public static final String PROBLEM_JSON = "application/problem+json";
-    public static final String CORS_ORIGIN = "http://localhost:3000";
+    public static final String CORS_ORIGIN = "*";
 
     public FindChannelFunctionApp() {
         this(createObjectMapper(), new ChannelRegistryClient(createObjectMapper(), HttpClients.createDefault(),
@@ -84,6 +85,8 @@ public class FindChannelFunctionApp implements RequestStreamHandler {
         Map<String,String> headers = new ConcurrentHashMap<>();
         headers.put(CONTENT_TYPE, APPLICATION_JSON.getMimeType());
         headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, CORS_ORIGIN);
+        headers.put(HttpHeaders.VARY, "Origin");
+
         objectMapper.writeValue(output, new GatewayResponse<>(objectMapper.writeValueAsString(body), headers,
                 statusCode));
     }
@@ -92,6 +95,8 @@ public class FindChannelFunctionApp implements RequestStreamHandler {
         Map<String,String> headers = new ConcurrentHashMap<>();
         headers.put(CONTENT_TYPE, PROBLEM_JSON);
         headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, CORS_ORIGIN);
+        headers.put(HttpHeaders.VARY, "Origin");
+
         objectMapper.writeValue(output, new GatewayResponse<>(objectMapper.writeValueAsString(body), headers,
                 statusCode));
     }

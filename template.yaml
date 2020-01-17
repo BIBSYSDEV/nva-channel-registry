@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  AWS
+
+  Sample SAM Template for AWS
+
+Parameters:
+  CognitoAuthorizerArn:
+    Type: String
+    Description: Reference to Cognito UserPool for the stage
+  CustomDomain:
+    Type: String
+    Description: Custom API to connect this lambda to
+  CustomDomainBasePath:
+    Type: String
+    Description: Base path mapping in CustomDomain
+
+Globals:
+  Function:
+    Timeout: 20
+  Api:
+    Cors:
+      AllowMethods: "'POST,OPTIONS'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'*'"
+
+Resources:
+  FindChannelApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Models:
+        Search:
+          type: object
+          required:
+            - tableId
+            - searchTerm
+          properties:
+            tableId:
+              type: integer
+            searchTerm:
+              type: string
+
+  FindChannelFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: FindChannelFunction
+      Handler: no.unit.nva.channel.MainHandler::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Environment:
+        Variables:
+          ALLOWED_ORIGIN: '*'
+      Events:
+        FindChannel:
+          Type: Api
+          Properties:
+            Path: /search
+            Method: POST
+            RestApiId:
+              Ref: FindChannelApi
+            RequestModel:
+              Model: Search
+              Required: true
+
+  FindChannelBasePathMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      BasePath: !Ref CustomDomainBasePath
+      DomainName: !Ref CustomDomain
+      RestApiId: !Ref FindChannelApi
+      Stage: !Ref FindChannelApi.Stage

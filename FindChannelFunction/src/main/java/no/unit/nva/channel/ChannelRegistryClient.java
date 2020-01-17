@@ -1,5 +1,6 @@
 package no.unit.nva.channel;
 
+import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.channel.exception.NoResultsFoundException;
@@ -15,12 +16,20 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.apache.http.HttpHeaders.ACCEPT;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 public class ChannelRegistryClient {
+
+    public static final String NO_RESULTS_FROM_SERVICE = "No results from service.";
+    public static final String RETURNED_POSTS_JSON_POINTER = "/1/returnerte poster";
+    public static final String ORIGINAL_TITLE = "Original tittel";
+    public static final String ONLINE_ISSN = "Online ISSN";
+    public static final String PRINT_ISSN = "Print ISSN";
+    public static final String LEVEL_2019 = "Nivå 2019";
 
     private final transient ObjectMapper objectMapper;
     private final transient CloseableHttpClient httpClient;
@@ -41,42 +50,38 @@ public class ChannelRegistryClient {
         request.setEntity(new StringEntity(objectMapper.writeValueAsString(fetchJsonTableDataRequest)));
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
-            HttpEntity entity = response.getEntity();
-            if (entity == null) {
-                throw new NoResultsFoundException("Response from registry is empty.");
-            }
+            HttpEntity entity = Optional.ofNullable(response.getEntity())
+                    .orElseThrow(() -> new NoResultsFoundException(NO_RESULTS_FROM_SERVICE));
             String entityString = EntityUtils.toString(entity);
             JsonNode json = objectMapper.readTree(entityString);
             validateJsonResponse(json);
-            json.forEach(result -> {
-                results.add(toChannel(result));
-            });
+            json.forEach(result -> results.add(toChannel(result)));
         }
         return results;
     }
 
     private void validateJsonResponse(JsonNode jsonResponse) throws NoResultsFoundException {
-        if (jsonResponse.has(1)
-                && jsonResponse.get(1).at("/returnerte poster").isNumber()
-                && jsonResponse.get(1).at("/returnerte poster").intValue() == 0) {
-            throw new NoResultsFoundException("No results found for this search term.");
+        JsonPointer jsonPointer = JsonPointer.compile(RETURNED_POSTS_JSON_POINTER);
+        JsonNode returnedPostsNode = jsonResponse.at(jsonPointer);
+        if (returnedPostsNode.isNumber() && returnedPostsNode.intValue() == 0) {
+            throw new NoResultsFoundException(NO_RESULTS_FROM_SERVICE);
         }
     }
 
     protected Channel toChannel(JsonNode json) {
         Channel channel = new Channel();
-        if (json.has("Original tittel")) {
-            channel.setOriginalTitle(json.get("Original tittel").textValue());
+        if (json.has(ORIGINAL_TITLE)) {
+            channel.setOriginalTitle(json.get(ORIGINAL_TITLE).textValue());
         }
-        if (json.has("Online ISSN")) {
-            channel.setOnlineIssn(json.get("Online ISSN").textValue());
+        if (json.has(ONLINE_ISSN)) {
+            channel.setOnlineIssn(json.get(ONLINE_ISSN).textValue());
         }
-        if (json.has("Print ISSN")) {
-            channel.setOnlineIssn(json.get("Print ISSN").textValue());
+        if (json.has(PRINT_ISSN)) {
+            channel.setOnlineIssn(json.get(PRINT_ISSN).textValue());
         }
-        if (json.has("Nivå 2019")) {
+        if (json.has(LEVEL_2019)) {
             try {
-                channel.setLevel(Integer.parseInt(json.get("Nivå 2019").textValue()));
+                channel.setLevel(Integer.parseInt(json.get(LEVEL_2019).textValue()));
             } catch (NumberFormatException e) {
                 System.out.println("Error parsing level " + e.getMessage());
             }

@@ -34,7 +34,7 @@ import static org.zalando.problem.Status.BAD_REQUEST;
 import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 import static org.zalando.problem.Status.NOT_FOUND;
 
-public class FindChannelFunctionApp implements RequestStreamHandler {
+public class MainHandler implements RequestStreamHandler {
 
     private final transient ObjectMapper objectMapper;
     private final transient ChannelRegistryClient channelRegistryClient;
@@ -44,12 +44,13 @@ public class FindChannelFunctionApp implements RequestStreamHandler {
     public static final String PROBLEM_JSON = "application/problem+json";
     public transient String allowedOrigin;
 
-    public FindChannelFunctionApp() {
+    public MainHandler() {
         this(createObjectMapper(), new ChannelRegistryClient(createObjectMapper(), HttpClients.createDefault(),
                 CHANNEL_REGISTRY_URI), new Environment());
     }
 
-    public FindChannelFunctionApp(ObjectMapper objectMapper, ChannelRegistryClient channelRegistryClient, Environment environment) {
+    public MainHandler(ObjectMapper objectMapper, ChannelRegistryClient channelRegistryClient,
+                       Environment environment) {
         this.objectMapper = objectMapper;
         this.channelRegistryClient = channelRegistryClient;
         this.allowedOrigin = environment.get("ALLOWED_ORIGIN").orElseThrow(IllegalStateException::new);

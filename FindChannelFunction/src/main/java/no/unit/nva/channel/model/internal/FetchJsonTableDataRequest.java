@@ -1,6 +1,7 @@
 package no.unit.nva.channel.model.internal;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Collections;
@@ -8,39 +9,27 @@ import java.util.List;
 
 public class FetchJsonTableDataRequest {
 
-    @JsonProperty("tabell_id")
-    private Integer tableId;
+    private final Integer tableId;
+    private final Integer apiVersion;
+    private final String statusLine;
+    private final Integer limit;
+    private final String codeText;
+    private final String decimalSeparator;
+    private final List<String> variables;
+    private final List<String> sortBy;
+    private final List<Filter> filter;
 
-    @JsonProperty("api_versjon")
-    private Integer apiVersion;
-
-    @JsonProperty("statuslinje")
-    private String statusLine;
-
-    @JsonProperty("begrensning")
-    private Integer limit;
-
-    @JsonProperty("kodetekst")
-    private String codeText;
-
-    @JsonProperty("desimal_separator")
-    private String decimalSeparator;
-
-    @JsonProperty("variabler")
-    private List<String> variables;
-
-    @JsonProperty("sortBy")
-    private List<String> sortBy;
-
-    @JsonProperty("filter")
-    private List<Filter> filter;
-
-    public FetchJsonTableDataRequest() {
-    }
-
-    public FetchJsonTableDataRequest(Integer tableId, Integer apiVersion, String statusLine, Integer limit,
-                                     String codeText, String decimalSeparator, List<String> variables,
-                                     List<String> sortBy, List<Filter> filter) {
+    @JsonCreator
+    public FetchJsonTableDataRequest(
+            @JsonProperty("tabell_id") Integer tableId,
+            @JsonProperty("api_versjon") Integer apiVersion,
+            @JsonProperty("statuslinje") String statusLine,
+            @JsonProperty("begrensning") Integer limit,
+            @JsonProperty("kodetekst") String codeText,
+            @JsonProperty("desimal_separator") String decimalSeparator,
+            @JsonProperty("variabler") List<String> variables,
+            @JsonProperty("sortBy") List<String> sortBy,
+            @JsonProperty("filter") List<Filter> filter) {
         this.tableId = tableId;
         this.apiVersion = apiVersion;
         this.statusLine = statusLine;
@@ -56,72 +45,36 @@ public class FetchJsonTableDataRequest {
         return tableId;
     }
 
-    public void setTableId(Integer tableId) {
-        this.tableId = tableId;
-    }
-
     public Integer getApiVersion() {
         return apiVersion;
-    }
-
-    public void setApiVersion(Integer apiVersion) {
-        this.apiVersion = apiVersion;
     }
 
     public String getStatusLine() {
         return statusLine;
     }
 
-    public void setStatusLine(String statusLine) {
-        this.statusLine = statusLine;
-    }
-
     public Integer getLimit() {
         return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
     }
 
     public String getCodeText() {
         return codeText;
     }
 
-    public void setCodeText(String codeText) {
-        this.codeText = codeText;
-    }
-
     public String getDecimalSeparator() {
         return decimalSeparator;
-    }
-
-    public void setDecimalSeparator(String decimalSeparator) {
-        this.decimalSeparator = decimalSeparator;
     }
 
     public List<String> getVariables() {
         return variables;
     }
 
-    public void setVariables(List<String> variables) {
-        this.variables = variables;
-    }
-
     public List<String> getSortBy() {
         return sortBy;
     }
 
-    public void setSortBy(List<String> sortBy) {
-        this.sortBy = sortBy;
-    }
-
     public List<Filter> getFilter() {
         return filter;
-    }
-
-    public void setFilter(List<Filter> filter) {
-        this.filter = filter;
     }
 
     public static FetchJsonTableDataRequest create(Integer id, String searchTerm) {

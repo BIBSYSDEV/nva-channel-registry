@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static no.unit.nva.channel.FindChannelFunctionApp.ACCESS_CONTROL_ALLOW_ORIGIN;
+import static no.unit.nva.channel.MainHandler.ACCESS_CONTROL_ALLOW_ORIGIN;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
@@ -37,9 +37,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FindChannelFunctionAppTest {
+public class MainHandlerTest {
 
-    private final ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
+    private final ObjectMapper objectMapper = MainHandler.createObjectMapper();
     private Environment environment;
 
     @Before
@@ -55,19 +55,19 @@ public class FindChannelFunctionAppTest {
     @Test
     public void testDefaultConstructor() {
         environmentVariables.set("ALLOWED_ORIGIN", "*");
-        FindChannelFunctionApp findChannelFunctionApp = new FindChannelFunctionApp();
+        MainHandler findChannelFunctionApp = new MainHandler();
         assertNotNull(findChannelFunctionApp);
     }
 
     @Test
     public void test() throws IOException {
         ChannelRegistryClient channelRegistryClient = mock(ChannelRegistryClient.class);
-        FindChannelFunctionApp findChannelFunctionApp = new FindChannelFunctionApp(objectMapper, channelRegistryClient,
+        MainHandler mainHandler = new MainHandler(objectMapper, channelRegistryClient,
                 environment);
         Context context = mock(Context.class);
         OutputStream output = new ByteArrayOutputStream();
 
-        findChannelFunctionApp.handleRequest(inputStream(), output, context);
+        mainHandler.handleRequest(inputStream(), output, context);
 
         GatewayResponse gatewayResponse = objectMapper.readValue(output.toString(), GatewayResponse.class);
         assertEquals(SC_OK, gatewayResponse.getStatusCode());
@@ -82,12 +82,12 @@ public class FindChannelFunctionAppTest {
     public void testNoResultsFoundException() throws IOException, NoResultsFoundException {
         ChannelRegistryClient channelRegistryClient = mock(ChannelRegistryClient.class);
         when(channelRegistryClient.fetchChannels(anyInt(), anyString())).thenThrow(NoResultsFoundException.class);
-        FindChannelFunctionApp findChannelFunctionApp = new FindChannelFunctionApp(objectMapper, channelRegistryClient,
+        MainHandler mainHandler = new MainHandler(objectMapper, channelRegistryClient,
                 environment);
         Context context = mock(Context.class);
         OutputStream output = new ByteArrayOutputStream();
 
-        findChannelFunctionApp.handleRequest(inputStream(), output, context);
+        mainHandler.handleRequest(inputStream(), output, context);
 
         GatewayResponse gatewayResponse = objectMapper.readValue(output.toString(), GatewayResponse.class);
         assertEquals(SC_NOT_FOUND, gatewayResponse.getStatusCode());
@@ -97,13 +97,13 @@ public class FindChannelFunctionAppTest {
     public void testIOException() throws IOException, NoResultsFoundException {
         ChannelRegistryClient channelRegistryClient = mock(ChannelRegistryClient.class);
         when(channelRegistryClient.fetchChannels(anyInt(), anyString())).thenThrow(IOException.class);
-        FindChannelFunctionApp findChannelFunctionApp = new FindChannelFunctionApp(objectMapper, channelRegistryClient,
+        MainHandler mainHandler = new MainHandler(objectMapper, channelRegistryClient,
                 environment);
 
         Context context = mock(Context.class);
         OutputStream output = new ByteArrayOutputStream();
 
-        findChannelFunctionApp.handleRequest(inputStream(), output, context);
+        mainHandler.handleRequest(inputStream(), output, context);
 
         GatewayResponse gatewayResponse = objectMapper.readValue(output.toString(), GatewayResponse.class);
         assertEquals(SC_INTERNAL_SERVER_ERROR, gatewayResponse.getStatusCode());
@@ -113,12 +113,12 @@ public class FindChannelFunctionAppTest {
     @Test
     public void testBadRequest() throws IOException {
         ChannelRegistryClient channelRegistryClient = mock(ChannelRegistryClient.class);
-        FindChannelFunctionApp findChannelFunctionApp = new FindChannelFunctionApp(objectMapper, channelRegistryClient,
+        MainHandler mainHandler = new MainHandler(objectMapper, channelRegistryClient,
                 environment);
         Context context = mock(Context.class);
         OutputStream output = new ByteArrayOutputStream();
 
-        findChannelFunctionApp.handleRequest(new ByteArrayInputStream(new byte[0]), output, context);
+        mainHandler.handleRequest(new ByteArrayInputStream(new byte[0]), output, context);
 
         GatewayResponse gatewayResponse = objectMapper.readValue(output.toString(), GatewayResponse.class);
         assertEquals(SC_BAD_REQUEST, gatewayResponse.getStatusCode());
@@ -128,7 +128,7 @@ public class FindChannelFunctionAppTest {
     public void testBadUri() {
         Context context = mock(Context.class);
         when(context.getAwsRequestId()).thenReturn("::/&(%¤#");
-        URI instance = FindChannelFunctionApp.createProblemInstance(context);
+        URI instance = MainHandler.createProblemInstance(context);
         assertNull(instance);
     }
 

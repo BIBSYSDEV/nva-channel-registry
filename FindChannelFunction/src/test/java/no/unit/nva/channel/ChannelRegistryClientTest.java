@@ -15,15 +15,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ChannelRegistryClientTest {
 
-    private ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
+    private ObjectMapper objectMapper = MainHandler.createObjectMapper();
 
-    @Test(expected = NoResultsFoundException.class)
+    @Test
     public void testEmptyResponse() throws IOException, NoResultsFoundException {
         CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
         CloseableHttpResponse response = mock(CloseableHttpResponse.class);
@@ -32,10 +34,14 @@ public class ChannelRegistryClientTest {
 
         ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient,
                 "http://example.org");
-        channelRegistryClient.fetchChannels(851, "searchTerm");
+        Throwable exception = assertThrows(NoResultsFoundException.class, () -> {
+            channelRegistryClient.fetchChannels(851, "searchTerm");
+        });
+
+        assertEquals(ChannelRegistryClient.NO_RESULTS_FROM_SERVICE, exception.getMessage());
     }
 
-    @Test(expected = NoResultsFoundException.class)
+    @Test
     public void testStatusMessageResponse() throws IOException, NoResultsFoundException, URISyntaxException {
         CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
         CloseableHttpResponse response = mock(CloseableHttpResponse.class);
@@ -46,7 +52,12 @@ public class ChannelRegistryClientTest {
 
         ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient,
                 "http://example.org");
-        channelRegistryClient.fetchChannels(851, "searchTerm");
+
+        Throwable exception = assertThrows(NoResultsFoundException.class, () -> {
+            channelRegistryClient.fetchChannels(851, "searchTerm");
+        });
+
+        assertEquals(ChannelRegistryClient.NO_RESULTS_FROM_SERVICE, exception.getMessage());
     }
 
     @Test

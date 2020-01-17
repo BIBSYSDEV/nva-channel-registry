@@ -2,7 +2,7 @@ package no.unit.nva.channel.model.outgoing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.channel.FindChannelFunctionApp;
+import no.unit.nva.channel.MainHandler;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class SearchResponseTest {
 
     @Test
     public void testObjectMapping() throws JsonProcessingException {
-        ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
+        ObjectMapper objectMapper = MainHandler.createObjectMapper();
 
         Channel channel = new Channel(
                 "Original Tittel",
@@ -31,7 +31,7 @@ public class SearchResponseTest {
 
     @Test
     public void testResponseHasNullAsLevel() throws JsonProcessingException {
-        ObjectMapper objectMapper = FindChannelFunctionApp.createObjectMapper();
+        ObjectMapper objectMapper = MainHandler.createObjectMapper();
 
         Channel channel = new Channel(
                 "Original Tittel",

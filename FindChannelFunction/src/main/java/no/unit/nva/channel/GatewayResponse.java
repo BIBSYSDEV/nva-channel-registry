@@ -1,19 +1,23 @@
 package no.unit.nva.channel;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GatewayResponse<T> {
 
-    private T body;
-    private Map<String, String> headers;
-    private int statusCode;
+    private final T body;
+    private final Map<String, String> headers;
+    private final int statusCode;
 
-    public GatewayResponse() {
-    }
-
-    public GatewayResponse(final T body, final Map<String, String> headers, final int statusCode) {
+    @JsonCreator
+    public GatewayResponse(
+            @JsonProperty("body") final T body,
+            @JsonProperty("headers") final Map<String, String> headers,
+            @JsonProperty("statusCode") final int statusCode) {
         this.statusCode = statusCode;
         this.body = body;
         this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
@@ -29,17 +33,5 @@ public class GatewayResponse<T> {
 
     public int getStatusCode() {
         return statusCode;
-    }
-
-    public void setBody(T body) {
-        this.body = body;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
     }
 }

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Filter {
 
+    @JsonProperty("variabel")
     private final String variabel;
+    @JsonProperty("selection")
     private final Selection selection;
 
     @JsonCreator

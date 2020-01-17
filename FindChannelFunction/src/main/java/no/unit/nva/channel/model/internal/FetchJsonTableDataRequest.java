@@ -9,14 +9,23 @@ import java.util.List;
 
 public class FetchJsonTableDataRequest {
 
+    @JsonProperty("tabell_id")
     private final Integer tableId;
+    @JsonProperty("api_versjon")
     private final Integer apiVersion;
+    @JsonProperty("statuslinje")
     private final String statusLine;
+    @JsonProperty("begrensning")
     private final Integer limit;
+    @JsonProperty("kodetekst")
     private final String codeText;
+    @JsonProperty("desimal_separator")
     private final String decimalSeparator;
+    @JsonProperty("variabler")
     private final List<String> variables;
+    @JsonProperty("sortBy")
     private final List<String> sortBy;
+    @JsonProperty("filter")
     private final List<Filter> filter;
 
     @JsonCreator

@@ -43,6 +43,7 @@ public class ChannelRegistryClient {
 
     public List<Channel> fetchChannels(Integer tableId, String searchTerm) throws IOException, NoResultsFoundException {
         FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.create(tableId, searchTerm);
+        System.out.println("Request: " + objectMapper.writeValueAsString(fetchJsonTableDataRequest));
         List<Channel> results = new ArrayList<>();
         HttpPost request = new HttpPost(url);
         request.setHeader(ACCEPT, APPLICATION_JSON.getMimeType());

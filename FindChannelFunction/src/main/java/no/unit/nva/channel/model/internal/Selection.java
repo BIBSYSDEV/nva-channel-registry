@@ -7,7 +7,9 @@ import java.util.List;
 
 public class Selection {
 
+    @JsonProperty("filter")
     private final String filter;
+    @JsonProperty("values")
     private final List<String> values;
 
     @JsonCreator

@@ -83,7 +83,7 @@ public class MainHandler implements RequestStreamHandler {
         }
     }
 
-    private void writeResponse(OutputStream output, Object body, int statusCode) throws IOException {
+    private void writeResponse(OutputStream output, SearchResponse body, int statusCode) throws IOException {
         Map<String,String> headers = new ConcurrentHashMap<>();
         headers.put(CONTENT_TYPE, APPLICATION_JSON.getMimeType());
         headers.put(ACCESS_CONTROL_ALLOW_ORIGIN, allowedOrigin);

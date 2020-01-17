@@ -59,4 +59,13 @@ public class Channel {
         this.level = level;
     }
 
+    @Override
+    public String toString() {
+        return "Channel{"
+                + "originalTitle='" + originalTitle + '\''
+                + ", onlineIssn='" + onlineIssn + '\''
+                + ", printIssn='" + printIssn + '\''
+                + ", level=" + level
+                + '}';
+    }
 }

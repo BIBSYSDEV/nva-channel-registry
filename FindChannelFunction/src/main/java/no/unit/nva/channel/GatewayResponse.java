@@ -13,6 +13,13 @@ public class GatewayResponse<T> {
     private final Map<String, String> headers;
     private final int statusCode;
 
+    /**
+     * Constructor for GatewayResponse.
+     *
+     * @param body  body of response
+     * @param headers   http headers for response
+     * @param statusCode    status code for response
+     */
     @JsonCreator
     public GatewayResponse(
             @JsonProperty("body") final T body,

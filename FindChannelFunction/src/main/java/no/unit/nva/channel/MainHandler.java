@@ -49,6 +49,13 @@ public class MainHandler implements RequestStreamHandler {
                 CHANNEL_REGISTRY_URI), new Environment());
     }
 
+    /**
+     * Constructor for MainHandler.
+     *
+     * @param objectMapper  object mapper instance
+     * @param channelRegistryClient channel registry client instance
+     * @param environment   environment instance
+     */
     public MainHandler(ObjectMapper objectMapper, ChannelRegistryClient channelRegistryClient,
                        Environment environment) {
         this.objectMapper = objectMapper;
@@ -107,6 +114,12 @@ public class MainHandler implements RequestStreamHandler {
         return new ObjectMapper().registerModule(new ProblemModule());
     }
 
+    /**
+     * Create URI from AWS Lambda context.
+     *
+     * @param context   context instance
+     * @return  URI created from context
+     */
     public static URI createProblemInstance(Context context) {
         try {
             return new URIBuilder()

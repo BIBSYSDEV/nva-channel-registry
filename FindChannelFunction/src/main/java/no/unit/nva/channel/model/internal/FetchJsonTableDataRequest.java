@@ -28,6 +28,19 @@ public class FetchJsonTableDataRequest {
     @JsonProperty("filter")
     private final List<Filter> filter;
 
+    /**
+     * Constructor for FetchJsonTableDataRequest.
+     *
+     * @param tableId   tableId
+     * @param apiVersion    apiVersion
+     * @param statusLine    statusLine
+     * @param limit limit
+     * @param codeText  codeText
+     * @param decimalSeparator  decimalSeparator
+     * @param variables variables
+     * @param sortBy    sortBy
+     * @param filter    filter
+     */
     @JsonCreator
     public FetchJsonTableDataRequest(
             @JsonProperty("tabell_id") Integer tableId,
@@ -86,11 +99,18 @@ public class FetchJsonTableDataRequest {
         return filter;
     }
 
-    public static FetchJsonTableDataRequest create(Integer id, String searchTerm) {
+    /**
+     * Static method to create FetchJsonTableDataRequest from tableId and searchTerm.
+     *
+     * @param tableId   tableId
+     * @param searchTerm    searchTerm
+     * @return  FetchJsonTableDataRequest
+     */
+    public static FetchJsonTableDataRequest create(Integer tableId, String searchTerm) {
         Selection selection = new Selection("like", Collections.singletonList(searchTerm));
         Filter filter = new Filter("Original Tittel", selection);
         return new FetchJsonTableDataRequest(
-                id,
+                tableId,
                 1,
                 "N",
                 10,

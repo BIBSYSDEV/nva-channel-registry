@@ -35,12 +35,28 @@ public class ChannelRegistryClient {
     private final transient CloseableHttpClient httpClient;
     private final transient String url;
 
+    /**
+     * Constructor for ChannelRegistryClient.
+     *
+     * @param objectMapper  object mapper instance
+     * @param httpClient   http client instance
+     * @param url   channel registry service url
+     */
     public ChannelRegistryClient(ObjectMapper objectMapper, CloseableHttpClient httpClient, String url) {
         this.objectMapper = objectMapper;
         this.httpClient = httpClient;
         this.url = url;
     }
 
+    /**
+     * Fetch channels from service.
+     *
+     * @param tableId   table id of entity
+     * @param searchTerm search term to search for
+     * @return  list of channels
+     * @throws IOException  thrown when problems occur when processing response from service
+     * @throws NoResultsFoundException thrown when service respons but has no results
+     */
     public List<Channel> fetchChannels(Integer tableId, String searchTerm) throws IOException, NoResultsFoundException {
         FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.create(tableId, searchTerm);
         System.out.println("Request: " + objectMapper.writeValueAsString(fetchJsonTableDataRequest));

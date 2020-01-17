@@ -16,6 +16,14 @@ public class Channel {
     @JsonProperty("level")
     private Integer level;
 
+    /**
+     * Constructor for Channel.
+     *
+     * @param originalTitle original title
+     * @param onlineIssn    online ISSN
+     * @param printIssn print ISSN
+     * @param level level
+     */
     public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level) {
         this.originalTitle = originalTitle;
         this.onlineIssn = onlineIssn;

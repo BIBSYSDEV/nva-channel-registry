@@ -16,6 +16,9 @@ public class Channel {
     @JsonProperty("level")
     private Integer level;
 
+    @JsonProperty("openAccess")
+    private Boolean openAccess;
+
     /**
      * Constructor for Channel.
      *
@@ -23,12 +26,14 @@ public class Channel {
      * @param onlineIssn    online ISSN
      * @param printIssn print ISSN
      * @param level level
+     * @param openAccess open access
      */
-    public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level) {
+    public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level, Boolean openAccess) {
         this.originalTitle = originalTitle;
         this.onlineIssn = onlineIssn;
         this.printIssn = printIssn;
         this.level = level;
+        this.openAccess = openAccess;
     }
 
     public Channel() {
@@ -65,5 +70,13 @@ public class Channel {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public Boolean getOpenAccess() {
+        return openAccess;
+    }
+
+    public void setOpenAccess(Boolean openAccess) {
+        this.openAccess = openAccess;
     }
 }

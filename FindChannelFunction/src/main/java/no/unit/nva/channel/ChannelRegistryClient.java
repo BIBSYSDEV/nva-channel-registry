@@ -30,6 +30,7 @@ public class ChannelRegistryClient {
     public static final String ONLINE_ISSN = "Online ISSN";
     public static final String PRINT_ISSN = "Print ISSN";
     public static final String LEVEL_2019 = "Nivå 2019";
+    public static final String OPEN_ACCESS = "Open Access";
 
     private final transient ObjectMapper objectMapper;
     private final transient CloseableHttpClient httpClient;
@@ -102,6 +103,9 @@ public class ChannelRegistryClient {
             } catch (NumberFormatException e) {
                 System.out.println("Error parsing level " + e.getMessage());
             }
+        }
+        if (json.has(OPEN_ACCESS)) {
+            channel.setOpenAccess(Optional.ofNullable(json.get(OPEN_ACCESS).textValue()).isPresent());
         }
         return channel;
     }

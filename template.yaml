@@ -5,6 +5,16 @@ Description: >
 
   Sample SAM Template for AWS
 
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: Channel Registry
+    Description: Channel Registry for publications
+    Author: Unit
+    SemanticVersion: 1.0.0
+    SpdxLicenseId: MIT
+    LicenseUrl: LICENSE
+
 Parameters:
   CognitoAuthorizerArn:
     Type: String

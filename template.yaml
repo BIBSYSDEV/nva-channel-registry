@@ -8,7 +8,7 @@ Description: >
 
 Metadata:
   AWS::ServerlessRepo::Application:
-    Name: channel-registry
+    Name: PublicationChannelRegister
     Description: Channel Registry for publications
     Author: Unit
     SemanticVersion: 1.0.0

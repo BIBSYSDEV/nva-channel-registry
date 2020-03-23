@@ -40,6 +40,7 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
+      EndpointConfiguration: REGIONAL
       Models:
         Search:
           type: object
@@ -57,7 +58,7 @@ Resources:
     Properties:
       CodeUri: FindChannelFunction
       Handler: no.unit.nva.channel.MainHandler::handleRequest
-      Runtime: java8
+      Runtime: java11
       MemorySize: 512
       Environment:
         Variables:

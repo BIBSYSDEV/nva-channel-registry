@@ -5,9 +5,13 @@ plugins {
     id 'pmd'
 }
 
+sourceCompatibility =  JavaVersion.VERSION_11  // source-code version and must be <= targetCompatibility
+targetCompatibility = JavaVersion.VERSION_11 // bytecode target version
+
 repositories {
     jcenter()
 }
+
 
 
 dependencies {

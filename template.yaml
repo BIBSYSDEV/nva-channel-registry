@@ -10,9 +10,9 @@ Metadata:
     Name: PublicationChannelRegister
     Description: Channel Registry for publications
     Author: Unit
-    SemanticVersion: 1.0.0
     SpdxLicenseId: MIT
     LicenseUrl: LICENSE
+    Labels: ['${CODEBUILD_RESOLVED_SOURCE_VERSION}', '${GIT_REPO}']
 
 Parameters:
   CognitoAuthorizerArn:

@@ -13,6 +13,7 @@ Metadata:
     SpdxLicenseId: MIT
     LicenseUrl: LICENSE
     Labels: ['${CODEBUILD_RESOLVED_SOURCE_VERSION}', '${GIT_REPO}']
+    # SemanticVersion: is set via SAM command line
 
 Parameters:
   CognitoAuthorizerArn:

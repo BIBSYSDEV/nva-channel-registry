@@ -56,10 +56,10 @@ Resources:
   FindChannelFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: FindChannelFunction
+      CodeUri: find-channel
       Handler: no.unit.nva.channel.MainHandler::handleRequest
       Runtime: java11
-      MemorySize: 512
+      MemorySize: 1408
       Environment:
         Variables:
           ALLOWED_ORIGIN: '*'

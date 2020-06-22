@@ -14,6 +14,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,9 +31,11 @@ public class ChannelRegistryClient {
     public static final String ORIGINAL_TITLE = "Original tittel";
     public static final String ONLINE_ISSN = "Online ISSN";
     public static final String PRINT_ISSN = "Print ISSN";
-    public static final String LEVEL_2019 = "Nivå 2019";
+    public static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.now(ZoneId.of("Europe/Oslo"));
+    public static final String CURRENT_LEVEL = "Nivå " + ZONED_DATE_TIME.getYear();
     public static final String OPEN_ACCESS = "Open Access";
-    public static final String TERMINATED_YEAR = "Nedlagt år";
+    public static final String ACTIVE = "Aktiv";
+    public static final String ACTIVE_STATUS = "1";
 
     private final transient ObjectMapper objectMapper;
     private final transient CloseableHttpClient httpClient;
@@ -81,7 +85,7 @@ public class ChannelRegistryClient {
     }
 
     private boolean isActive(JsonNode jsonNode) {
-        return jsonNode.has(TERMINATED_YEAR) && jsonNode.get(TERMINATED_YEAR).isNull();
+        return jsonNode.has(ACTIVE) && jsonNode.get(ACTIVE).asText().equals(ACTIVE_STATUS);
     }
 
     private void validateJsonResponse(JsonNode jsonResponse) throws NoResultsFoundException {
@@ -103,9 +107,9 @@ public class ChannelRegistryClient {
         if (json.has(PRINT_ISSN)) {
             channel.setOnlineIssn(json.get(PRINT_ISSN).textValue());
         }
-        if (json.has(LEVEL_2019)) {
+        if (json.has(CURRENT_LEVEL)) {
             try {
-                channel.setLevel(Integer.parseInt(json.get(LEVEL_2019).textValue()));
+                channel.setLevel(Integer.parseInt(json.get(CURRENT_LEVEL).textValue()));
             } catch (NumberFormatException e) {
                 System.out.println("Error parsing level " + e.getMessage());
             }
@@ -115,5 +119,4 @@ public class ChannelRegistryClient {
         }
         return channel;
     }
-
 }

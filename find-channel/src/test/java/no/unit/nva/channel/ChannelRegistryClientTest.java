@@ -73,7 +73,24 @@ public class ChannelRegistryClientTest {
                 "http://example.org");
         List<Channel> channels = channelRegistryClient.fetchChannels(851, "searchTerm");
 
-        Assert.assertEquals(10, channels.size());
+        Assert.assertEquals(8, channels.size());
+    }
+
+    @Test
+    public void channelRegistryResponseReturnsOneChannelWhenInputMatchesOverlappingJournals() throws IOException,
+            URISyntaxException, NoResultsFoundException {
+        CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
+        CloseableHttpResponse response = mock(CloseableHttpResponse.class);
+
+        when(httpClient.execute(any())).thenReturn(response);
+        when(response.getEntity()).thenReturn(new StringEntity(new String(Files.readAllBytes(Paths.get(getClass()
+                .getClassLoader().getResource("overlapping_resources_response.json").toURI())))));
+
+        ChannelRegistryClient channelRegistryClient = new ChannelRegistryClient(objectMapper, httpClient,
+                "http://example.org");
+        List<Channel> channels = channelRegistryClient.fetchChannels(851, "searchTerm");
+
+        Assert.assertEquals(1, channels.size());
     }
 
 }

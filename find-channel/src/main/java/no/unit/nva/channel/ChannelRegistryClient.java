@@ -75,6 +75,7 @@ public class ChannelRegistryClient {
             HttpEntity entity = Optional.ofNullable(response.getEntity())
                     .orElseThrow(() -> new NoResultsFoundException(NO_RESULTS_FROM_SERVICE));
             String entityString = EntityUtils.toString(entity);
+            System.out.println("Response: " + entityString);
             JsonNode json = objectMapper.readTree(entityString);
             validateJsonResponse(json);
             return StreamUtil.toStream(json)

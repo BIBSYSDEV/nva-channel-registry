@@ -14,9 +14,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.apache.http.HttpHeaders.ACCEPT;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
@@ -29,8 +31,11 @@ public class ChannelRegistryClient {
     public static final String ORIGINAL_TITLE = "Original tittel";
     public static final String ONLINE_ISSN = "Online ISSN";
     public static final String PRINT_ISSN = "Print ISSN";
-    public static final String LEVEL_2019 = "Nivå 2019";
+    public static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.now(ZoneId.of("Europe/Oslo"));
+    public static final String CURRENT_LEVEL = "Nivå " + ZONED_DATE_TIME.getYear();
     public static final String OPEN_ACCESS = "Open Access";
+    public static final String ACTIVE = "Aktiv";
+    public static final String ACTIVE_STATUS = "1";
 
     private final transient ObjectMapper objectMapper;
     private final transient CloseableHttpClient httpClient;
@@ -61,7 +66,6 @@ public class ChannelRegistryClient {
     public List<Channel> fetchChannels(Integer tableId, String searchTerm) throws IOException, NoResultsFoundException {
         FetchJsonTableDataRequest fetchJsonTableDataRequest = FetchJsonTableDataRequest.create(tableId, searchTerm);
         System.out.println("Request: " + objectMapper.writeValueAsString(fetchJsonTableDataRequest));
-        List<Channel> results = new ArrayList<>();
         HttpPost request = new HttpPost(url);
         request.setHeader(ACCEPT, APPLICATION_JSON.getMimeType());
         request.setHeader(CONTENT_TYPE, APPLICATION_JSON.getMimeType());
@@ -71,11 +75,18 @@ public class ChannelRegistryClient {
             HttpEntity entity = Optional.ofNullable(response.getEntity())
                     .orElseThrow(() -> new NoResultsFoundException(NO_RESULTS_FROM_SERVICE));
             String entityString = EntityUtils.toString(entity);
+            System.out.println("Response: " + entityString);
             JsonNode json = objectMapper.readTree(entityString);
             validateJsonResponse(json);
-            json.forEach(result -> results.add(toChannel(result)));
+            return StreamUtil.toStream(json)
+                    .filter(this::isActive)
+                    .map(this::toChannel)
+                    .collect(Collectors.toList());
         }
-        return results;
+    }
+
+    private boolean isActive(JsonNode jsonNode) {
+        return jsonNode.has(ACTIVE) && jsonNode.get(ACTIVE).asText().equals(ACTIVE_STATUS);
     }
 
     private void validateJsonResponse(JsonNode jsonResponse) throws NoResultsFoundException {
@@ -97,9 +108,9 @@ public class ChannelRegistryClient {
         if (json.has(PRINT_ISSN)) {
             channel.setOnlineIssn(json.get(PRINT_ISSN).textValue());
         }
-        if (json.has(LEVEL_2019)) {
+        if (json.has(CURRENT_LEVEL)) {
             try {
-                channel.setLevel(Integer.parseInt(json.get(LEVEL_2019).textValue()));
+                channel.setLevel(Integer.parseInt(json.get(CURRENT_LEVEL).textValue()));
             } catch (NumberFormatException e) {
                 System.out.println("Error parsing level " + e.getMessage());
             }
@@ -109,5 +120,4 @@ public class ChannelRegistryClient {
         }
         return channel;
     }
-
 }

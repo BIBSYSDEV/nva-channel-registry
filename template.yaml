@@ -16,9 +16,6 @@ Metadata:
     # SemanticVersion: is set via SAM command line
 
 Parameters:
-  CognitoAuthorizerArn:
-    Type: String
-    Description: Reference to Cognito UserPool for the stage
   CustomDomain:
     Type: String
     Description: Custom API to connect this lambda to
@@ -29,17 +26,22 @@ Parameters:
 Globals:
   Function:
     Timeout: 20
-  Api:
-    Cors:
-      AllowMethods: "'POST,OPTIONS'"
-      AllowHeaders: "'Content-Type'"
-      AllowOrigin: "'*'"
 
 Resources:
+  ApiAccessLogGroup:
+    Type: AWS::Logs::LogGroup
+
   FindChannelApi:
     Type: AWS::Serverless::Api
     Properties:
+      AccessLogSetting:
+        DestinationArn: !GetAtt ApiAccessLogGroup.Arn
+        Format: '{ "apiId": "$context.apiId", "requestId": "$context.requestId", "requestTime": "$context.requestTime", "requestTimeEpoch": "$context.requestTimeEpoch", "httpMethod": "$context.httpMethod", "path": "$context.path", "status": "$context.status",  "error.message": "$context.error.message" }'
       StageName: Prod
+      Cors:
+        AllowMethods: "'POST,OPTIONS'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
       EndpointConfiguration: REGIONAL
       Models:
         Search:

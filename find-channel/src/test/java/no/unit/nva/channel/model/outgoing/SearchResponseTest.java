@@ -2,6 +2,8 @@ package no.unit.nva.channel.model.outgoing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.MalformedURLException;
+import java.net.URL;
 import no.unit.nva.channel.MainHandler;
 import org.junit.Test;
 
@@ -12,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 public class SearchResponseTest {
 
     @Test
-    public void testObjectMapping() throws JsonProcessingException {
+    public void testObjectMapping() throws JsonProcessingException, MalformedURLException {
         ObjectMapper objectMapper = MainHandler.createObjectMapper();
 
         Channel channel = new Channel(
@@ -21,7 +23,7 @@ public class SearchResponseTest {
                 "Print ISSN",
                 1,
                 null,
-                null
+                new URL("http://example.org/123")
         );
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));
@@ -32,7 +34,7 @@ public class SearchResponseTest {
     }
 
     @Test
-    public void testResponseHasNullAsLevel() throws JsonProcessingException {
+    public void testResponseHasNullAsLevel() throws JsonProcessingException, MalformedURLException {
         ObjectMapper objectMapper = MainHandler.createObjectMapper();
 
         Channel channel = new Channel(
@@ -41,7 +43,7 @@ public class SearchResponseTest {
                 "Print ISSN",
                 null,
                 true,
-                null
+                new URL("http://example.org/123")
         );
 
         SearchResponse response = new SearchResponse(Collections.singletonList(channel));

@@ -3,6 +3,8 @@ package no.unit.nva.channel;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.MalformedURLException;
+import java.net.URL;
 import no.unit.nva.channel.exception.NoResultsFoundException;
 import no.unit.nva.channel.model.internal.FetchJsonTableDataRequest;
 import no.unit.nva.channel.model.outgoing.Channel;
@@ -36,6 +38,7 @@ public class ChannelRegistryClient {
     public static final String OPEN_ACCESS = "Open Access";
     public static final String ACTIVE = "Aktiv";
     public static final String ACTIVE_STATUS = "1";
+    public static final String URL = "Url";
 
     private final transient ObjectMapper objectMapper;
     private final transient CloseableHttpClient httpClient;
@@ -117,6 +120,13 @@ public class ChannelRegistryClient {
         }
         if (json.has(OPEN_ACCESS)) {
             channel.setOpenAccess(Optional.ofNullable(json.get(OPEN_ACCESS).textValue()).isPresent());
+        }
+        if (json.has(URL)) {
+            try {
+                channel.setUrl(new URL(json.get(URL).textValue()));
+            } catch (MalformedURLException e) {
+                System.out.println("Error parsing url " + e.getMessage());
+            }
         }
         return channel;
     }

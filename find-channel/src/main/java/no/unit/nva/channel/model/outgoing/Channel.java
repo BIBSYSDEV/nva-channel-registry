@@ -1,6 +1,7 @@
 package no.unit.nva.channel.model.outgoing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.net.URL;
 
 public class Channel {
 
@@ -19,6 +20,9 @@ public class Channel {
     @JsonProperty("openAccess")
     private Boolean openAccess;
 
+    @JsonProperty("url")
+    private URL url;
+
     /**
      * Constructor for Channel.
      *
@@ -27,13 +31,16 @@ public class Channel {
      * @param printIssn print ISSN
      * @param level level
      * @param openAccess open access
+     * @param url   url
      */
-    public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level, Boolean openAccess) {
+    public Channel(String originalTitle, String onlineIssn, String printIssn, Integer level, Boolean openAccess,
+                   URL url) {
         this.originalTitle = originalTitle;
         this.onlineIssn = onlineIssn;
         this.printIssn = printIssn;
         this.level = level;
         this.openAccess = openAccess;
+        this.url = url;
     }
 
     public Channel() {
@@ -78,5 +85,13 @@ public class Channel {
 
     public void setOpenAccess(Boolean openAccess) {
         this.openAccess = openAccess;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
     }
 }

@@ -1,0 +1,29 @@
+{
+  "@context": "https://link.to.channel.search.context.json",
+  "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/journal?query=__QUERY_INPUT__&year=__YEAR_INPUT__page=1&results=10",
+  "size": 1,
+  "searchString": "query=__QUERY_INPUT__&year=__YEAR_INPUT__page=1&results=10",
+  "processingTime": __PROCESSING_TIME__,
+  "firstRecord": 1,
+  "nextResults": null,
+  "hits": [
+    {
+      "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/journal/__YEAR_INPUT__/446885",
+      "name": "Sensors",
+      "dbhId": "446885",
+      "eIssn": "1424-8220",
+      "issn": null,
+      "begins": "2001",
+      "ends": null,
+      "language": "http://www.lexvo.org/page/iso639-3/eng",
+      "url": "http://www.mdpi.com/journal/sensors",
+      "publisher": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/publisher/26778",
+      "npiDomain": "https://link.to/npi#1046",
+      "peerReviewed": true,
+      "openAccess": true,
+      "scientificValue": {
+        "__INPUT_YEAR__": "1"
+      }
+    }
+  ]
+}

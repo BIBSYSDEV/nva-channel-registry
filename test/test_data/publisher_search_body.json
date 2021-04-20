@@ -1,0 +1,22 @@
+{
+  "@context": "https://link.to.channel.search.context.json",
+  "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/publisher?query=__QUERY_INPUT__&year=__YEAR_INPUT__page=1&results=10",
+  "size": 1,
+  "searchString": "query=__QUERY_INPUT__&year=__YEAR_INPUT__page=1&results=10",
+  "processingTime": __PROCESSING_TIME__,
+  "firstRecord": 1,
+  "nextResults": null,
+  "hits": [
+    {
+      "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/publisher/__YEAR_INPUT__/18442",
+      "name": "Taylor & Francis",
+      "dbhId": "18442",
+      "isbnPrefixes": ["978-0-203", "978-0-415"],
+      "url": "http://www.tandf.co.uk/books/",
+      "peerReviewed": true,
+      "scientificValue": {
+        "__INPUT_YEAR__": "1"
+      }
+    }
+  ]
+}

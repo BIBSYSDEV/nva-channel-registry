@@ -1,14 +1,12 @@
 {
   "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/publisher/__YEAR_INPUT__/18442",
   "name": "Taylor & Francis",
-  "dbhId": "18442",
+  "identifier": "18442",
   "isbnPrefixes": [
     "978-0-203",
     "978-0-415"
   ],
   "url": "http://www.tandf.co.uk/books/",
   "peerReviewed": true,
-  "scientificValue": {
-    "__INPUT_YEAR__": "1"
-  }
+  "scientificValue": "LEVEL_1"
 }

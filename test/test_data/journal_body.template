@@ -2,7 +2,7 @@
   "@context": "https://context.for/channel.json",
   "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/journal/__YEAR__/446885",
   "name": "Sensors",
-  "dbhId": "446885",
+  "identifier": "446885",
   "eIssn": "1424-8220",
   "issn": null,
   "begins": "2001",
@@ -13,5 +13,5 @@
   "npiDomain": "https://link.to/npi#1046",
   "peerReviewed": true,
   "openAccess": true,
-  "scientificValue": "1"
+  "scientificValue": "LEVEL_1"
 }

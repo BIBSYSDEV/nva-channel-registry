@@ -7,10 +7,10 @@ Feature: Search testing
     * def searchPath = basePath + 'search?q='
     * def token = karate.properties['CHANNEL_REGISTRY_API_KEY'] # maybe not necessary
     * def currentEnvironment = karate.properties['CURRENT_ENVIRONMENT']
-    * def JOURNAL_SEARCH_BODY = read('test_data/journal_search_body.json').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
-    * def JOURNAL_YEAR_BODY = read('test_data/journal_year_body.json').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
-    * def PUBLISHER_SEARCH_BODY = read('test_data/publisher_search_body.json').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
-    * def PUBLISHER_YEAR_BODY = read('test_data/publisher_year_body.json').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
+    * def JOURNAL_SEARCH_BODY = read('test_data/journal_search_body.template').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
+    * def JOURNAL_YEAR_BODY = read('test_data/journal_body.template').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
+    * def PUBLISHER_SEARCH_BODY = read('test_data/publisher_search_body.template').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
+    * def PUBLISHER_YEAR_BODY = read('test_data/publisher_body.template').replace('__CURRENT_ENVIRONMENT__', currentEnvironment)
     * def existingJournal = '446885'
     * def existingPublisher = '18442'
     * def nonExisting = 'not-a-real-thing'

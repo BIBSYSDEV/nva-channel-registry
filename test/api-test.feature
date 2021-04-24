@@ -158,7 +158,7 @@ Feature: Search testing
     And match contentType == PROBLEM_JSON_MEDIA_TYPE
     And match response.title == 'Not acceptable'
     And match response.status == 406
-    And match response.detail == 'Your request cannot be processed because the HTTP method ' + <METHOD> + ' is not supported'
+    And match response.detail == 'Your request cannot be processed because the HTTP method ' + <METHOD> + ' is not supported, use GET'
     And match response.instance == 'https://' + path + '/channel/journal?query=Sensors'
     And match response.requestId == '#notnull'
 

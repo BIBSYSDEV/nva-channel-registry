@@ -74,6 +74,7 @@ Feature: Search testing
     When method get
     Then status 404
     And match contentType == PROBLEM_JSON_MEDIA_TYPE
+    And match response.type == 'about:blank'
     And match response.title == 'Not found'
     And match response.status == 404
     And match response.detail == 'The requested resource ' + <NON_EXISTING_RESOURCE_URL> + ' does not exist'
@@ -230,7 +231,7 @@ Feature: Search testing
     Given url <VALID_URL>
     When method get
     Then status 200
-    And match response.hits.length < 11
+    And match response.hits.length <= 10
 
     Examples:
       | VALID_URL                                             |
@@ -240,29 +241,29 @@ Feature: Search testing
   Scenario Outline: Search returns next ten results
     * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
     * contentType = responseHeaders['Content-Type'][0]
-    Given url <VALID_URL>
+    Given url <VALID_URL_WITH_START_PARAMETER>
     When method get
     Then status 200
-    And match response.hits.length < 11
+    And match response.hits.length <= 10
     And match response.firstRecord == 11
 
     Examples:
-      | VALID_URL                                                   |
+      | VALID_URL_WITH_START_PARAMETER                              |
       | 'https://' + path + '/channel/journal?query=and&start=11'   |
       | 'https://' + path + '/channel/publisher?query=and&start=11' |
 
   Scenario Outline: Search returns data for current year when year is unspecified
     * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
     * contentType = responseHeaders['Content-Type'][0]
-    Given url <VALID_URL> + <QUERY>
+    Given url <VALID_URL_WITH_PARAMETER_READY_FOR_VALUE> + <QUERY_VALUE>
     When method get
     Then status 200
-    And match response = <EXPECTED_BODY>.replace('__YEAR_INPUT__', currentYear).replace('__PROCESSING_TIME__', response.processingTime).replace('__QUERY_INPUT__', <QUERY>)
+    And match response = <EXPECTED_BODY>.replace('__YEAR_INPUT__', currentYear).replace('__PROCESSING_TIME__', response.processingTime).replace('__QUERY_INPUT__', <QUERY_VALUE>)
 
     Examples:
-      | VALID_URL                                       | QUERY   | EXPECTED_BODY         |
-      | 'https://' + path + '/channel/journal?query='   | Sensors | JOURNAL_SEARCH_BODY   |
-      | 'https://' + path + '/channel/publisher?query=' | Taylor  | PUBLISHER_SEARCH_BODY |
+      | VALID_URL_WITH_PARAMETER_READY_FOR_VALUE        | QUERY_VALUE | EXPECTED_BODY         |
+      | 'https://' + path + '/channel/journal?query='   | Sensors     | JOURNAL_SEARCH_BODY   |
+      | 'https://' + path + '/channel/publisher?query=' | Taylor      | PUBLISHER_SEARCH_BODY |
 
   Scenario Outline: Search returns data for given year when year is specified
     * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }

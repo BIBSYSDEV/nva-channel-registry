@@ -48,7 +48,7 @@ Feature: Search testing
       | 'https://' + path + '/channel/publisher/2019/' + existingPublisher |
 
   Scenario Outline: Unauthenticated search request is rejected
-    * configure headers = { 'Content-type': JSON_LD_MEDIA_TYPE }
+    * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE }
     * contentType = responseHeaders['Content-Type'][0]
     Given url <VALID_URL>
     When method get
@@ -68,7 +68,7 @@ Feature: Search testing
       | 'https://' + path + '/channel/publisher/2019/' + existingPublisher |
 
   Scenario Outline: Requesting non-existing resource returns not found error
-    * configure headers = { 'Content-type': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
+    * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
     * contentType = responseHeaders['Content-Type'][0]
     Given url <NON_EXISTING_RESOURCE_URL>
     When method get
@@ -87,7 +87,7 @@ Feature: Search testing
       | 'https://' + path + '/channel/publisher/2019/' + nonExisting |
 
   Scenario Outline: Query proxy error gives Bad Gateway problem response
-    * configure headers = { 'Content-type': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
+    * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
     * contentType = responseHeaders['Content-Type'][0]
     Given url <VALID_URL>
     And the Channel Register API is down
@@ -108,7 +108,7 @@ Feature: Search testing
       | 'https://' + path + '/channel/publisher/2019/' + existingPublisher |
 
   Scenario Outline: Slow upstream gives Gateway Timeout problem response
-    * configure headers = { 'Content-type': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
+    * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
     * contentType = responseHeaders['Content-Type'][0]
     Given url <VALID_URL>
     And the Channel Register response takes longer than 2 seconds
@@ -129,7 +129,7 @@ Feature: Search testing
       | 'https://' + path + '/channel/publisher/2019/' + existingPublisher |
 
   Scenario Outline: Unexpected error returns Internal Server Error problem response
-    * configure headers = { 'Content-type': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
+    * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
     * contentType = responseHeaders['Content-Type'][0]
     Given url <VALID_URL>
     When method get
@@ -150,7 +150,7 @@ Feature: Search testing
       | 'https://' + path + '/channel/publisher/2019/' + existingPublisher |
 
   Scenario Outline: Query with unacceptable method returns Not acceptable error
-    * configure headers = { 'Content-type': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
+    * configure headers = { 'Accept': JSON_LD_MEDIA_TYPE, 'Authorization: Basic ' + token }
     * contentType = responseHeaders['Content-Type'][0]
     Given url 'https://' + path + '/channel/journal?query=Sensors'
     When method <METHOD>

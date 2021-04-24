@@ -1,17 +1,14 @@
 {
   "@context": "https://context.for/channel.json",
-  "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/journal/__YEAR__/446885",
+  "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/journal/446885/__YEAR__",
   "name": "Sensors",
   "identifier": "446885",
   "eIssn": "1424-8220",
   "issn": null,
-  "begins": "2001",
-  "ends": null,
+  "active": true,
   "language": "http://www.lexvo.org/page/iso639-3/eng",
   "url": "http://www.mdpi.com/journal/sensors",
   "publisher": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/publisher/26778",
   "npiDomain": "https://link.to/npi#1046",
-  "peerReviewed": true,
-  "openAccess": true,
   "scientificValue": "LEVEL_1"
 }

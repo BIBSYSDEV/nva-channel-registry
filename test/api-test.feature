@@ -154,10 +154,10 @@ Feature: Search testing
     * contentType = responseHeaders['Content-Type'][0]
     Given url 'https://' + path + '/channel/journal?query=Sensors'
     When method <METHOD>
-    Then status 506
+    Then status 406
     And match contentType == PROBLEM_JSON_MEDIA_TYPE
     And match response.title == 'Not acceptable'
-    And match response.status == 506
+    And match response.status == 406
     And match response.detail == 'Your request cannot be processed because the HTTP method ' + <METHOD> + ' is not supported'
     And match response.instance == 'https://' + path + '/channel/journal?query=Sensors'
     And match response.requestId == '#notnull'

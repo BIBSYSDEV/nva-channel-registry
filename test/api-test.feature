@@ -193,7 +193,7 @@ Feature: Search testing
     And match contentType == PROBLEM_JSON_MEDIA_TYPE
     And match response.title == 'Not Acceptable'
     And match response.status == 406
-    And match response.detail == 'Your request cannot be processed because the supplied content-type ' + <UNACCEPTABLE_CONTENT_TYPE> + ' cannot be understood'
+    And match response.detail == 'Your request cannot be processed because the supplied content-type ' + <UNACCEPTABLE_CONTENT_TYPE> + ' cannot be understood, acceptable types: application/ld+json, application/json'
     And match response.instance == <VALID_URL>
     And match response.requestId == '#notnull'
 

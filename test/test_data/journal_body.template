@@ -1,0 +1,14 @@
+{
+  "@context": "https://context.for/channel.json",
+  "id": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/journal/446885/__YEAR__",
+  "name": "Sensors",
+  "identifier": "446885",
+  "eIssn": "1424-8220",
+  "issn": null,
+  "active": true,
+  "language": "http://www.lexvo.org/page/iso639-3/eng",
+  "url": "http://www.mdpi.com/journal/sensors",
+  "publisher": "https://__CURRENT_ENVIRONMENT__.nva.unit.no/channel/publisher/26778",
+  "npiDomain": "https://link.to/npi#1046",
+  "scientificValue": "LEVEL_1"
+}
